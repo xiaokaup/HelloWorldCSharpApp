@@ -154,6 +154,24 @@ namespace HelloWorldCSharpApp.Controllers
             return response.Command;
         }
 
+        [HttpGet("getCommandInvocation1", Name = "getCommandInvocation1")]
+        public async Task<GetCommandInvocationResponse> getCommandInvocation1(string commandId, string instanceId)
+        {
+            System.Diagnostics.Debug.WriteLine("Start getCommandInvocation1...");
+
+            GetCommandInvocationRequest sendCommandRequest = new GetCommandInvocationRequest
+            {
+                CommandId = commandId,
+                InstanceId = instanceId,
+            };
+
+            GetCommandInvocationResponse response = await this.awsSSMClient.GetCommandInvocationAsync(sendCommandRequest);
+
+            System.Diagnostics.Debug.WriteLine("Finish getCommandInvocation1.");
+
+            return response;
+        }
+
 
     }
 }
