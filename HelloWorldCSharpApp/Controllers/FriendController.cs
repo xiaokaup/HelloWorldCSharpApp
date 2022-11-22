@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -11,6 +13,8 @@ namespace HelloWorldCSharpApp.Controllers
     [Route("api/[controller]")]
     public class FriendController : ControllerBase
     {
+
+        static HttpClient client = new HttpClient();
 
         //private readonly ILogger<FriendController> _logger;
 
@@ -25,9 +29,28 @@ namespace HelloWorldCSharpApp.Controllers
             return new Uri("https://blog.followparis.com/");
         }
         [HttpGet("test2", Name = "test2")]
-        public Uri test2()
+        public async Task<Object> test2()
         {
-            return new Uri("https://blog.followparis.com/");
+            // Update port # in the following line.
+            client.BaseAddress = new Uri("http://localhost:8080/");
+            client.DefaultRequestHeaders.Accept.Clear();
+            client.DefaultRequestHeaders.Accept.Add(
+                new MediaTypeWithQualityHeaderValue("application/json"));
+
+            Object data = null;
+            HttpResponseMessage response = await client.GetAsync("/index");
+            if (response.IsSuccessStatusCode)
+            {
+                data = await response.Content.ReadAsAsync<Object>();
+            } else
+            {
+                data = response.StatusCode;
+                System.Diagnostics.Debug.WriteLine(response.Content);
+            }
+
+            System.Diagnostics.Debug.WriteLine("This is a log");
+            
+            return data;
         }
 
         [HttpGet("getFriends", Name = "GetFriends")]
