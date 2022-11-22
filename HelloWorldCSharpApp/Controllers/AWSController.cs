@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Amazon.EC2;
+using Amazon.EC2.Model;
 using Amazon.Runtime;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -26,15 +27,31 @@ namespace HelloWorldCSharpApp.Controllers
 
 
         [HttpGet("runInstance", Name = "runInstance")]
-        public void runInstance()
+        public async Task<string> runInstance()
         {
-            System.Diagnostics.Debug.WriteLine("runInstance...");
+            System.Diagnostics.Debug.WriteLine("Start runInstance...");
+
+            RunInstancesRequest startEc2Request = new RunInstancesRequest {
+                ImageId = "ami-02b01316e6e3496d9",
+                MinCount = 1,
+                MaxCount = 1,
+                InstanceType = "t3.nano",
+                SecurityGroupIds = new List<string>() { "sg-903004f8" },
+                SubnetId = "subnet-6e7f829e"
+            };
+
+            RunInstancesResponse response = await this.awsEc2Client.RunInstancesAsync(startEc2Request);
+
+            System.Diagnostics.Debug.WriteLine("Finish runInstance.");
+
+            return response.HttpStatusCode;
         }
 
         [HttpGet("stopInstance", Name = "stopInstance")]
         public void stopInstance()
         {
-            System.Diagnostics.Debug.WriteLine("stopInstance...");
+            System.Diagnostics.Debug.WriteLine("Start stopInstance...");
+            System.Diagnostics.Debug.WriteLine("Finish stopInstance.");
         }
     }
 }
