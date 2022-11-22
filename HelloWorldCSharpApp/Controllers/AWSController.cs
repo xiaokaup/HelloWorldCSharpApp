@@ -10,6 +10,7 @@ using Amazon.SimpleSystemsManagement;
 using Amazon.SimpleSystemsManagement.Model;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 
 
 namespace HelloWorldCSharpApp.Controllers
@@ -164,14 +165,11 @@ namespace HelloWorldCSharpApp.Controllers
             Dictionary<string, List<string>> parametersSourceInfo = new Dictionary<string, List<string>>();
             parametersSourceInfo.Add("path", new List<string> { "https://ansys-s3-bucket.s3.eu-west-3.amazonaws.com/first_script.sh" });
             parametersSourceInfo.Add("commandLine", new List<string> { "first_script.sh" });
-            string test = parametersSourceInfo.ToString();
-            System.Diagnostics.Debug.WriteLine("sendCommand2 test string:");
-            System.Diagnostics.Debug.WriteLine(test);
+
+            
 
             parameters.Add("sourceType", new List<string> { "S3" });
-            //parameters.Add("sourceInfo", new List<string> { parametersSourceInfo.ToString() });
-            parameters.Add("sourceInfo", new List<string> { TString.ToDebugString(parametersSourceInfo) });
-            //parameters.Add("commandLine", new List<string> { "first_script.sh" });
+            parameters.Add("sourceInfo", new List<string> { JsonConvert.SerializeObject(parametersSourceInfo) });
             SendCommandRequest sendCommandRequest = new SendCommandRequest
             {
                 DocumentName = "AWS-RunRemoteScript",
@@ -185,6 +183,7 @@ namespace HelloWorldCSharpApp.Controllers
             SendCommandResponse response = await this.awsSSMClient.SendCommandAsync(sendCommandRequest);
 
             System.Diagnostics.Debug.WriteLine("Finish sendCommand2.");
+            System.Diagnostics.Debug.WriteLine(JsonConvert.SerializeObject(parametersSourceInfo));
 
             return response.Command;
         }

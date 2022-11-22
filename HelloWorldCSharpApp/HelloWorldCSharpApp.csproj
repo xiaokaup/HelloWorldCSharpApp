@@ -15,6 +15,7 @@
     <PackageReference Include="AWSSDK.Core" Version="3.7.100.21" />
     <PackageReference Include="AWSSDK.SimpleSystemsManagement" Version="3.7.102.2" />
     <PackageReference Include="AWSSDK.EC2" Version="3.7.109" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
   </ItemGroup>
 
   <ItemGroup>
@@ -23,5 +24,6 @@
     <None Remove="AWSSDK.Core" />
     <None Remove="AWSSDK.SimpleSystemsManagement" />
     <None Remove="AWSSDK.EC2" />
+    <None Remove="Newtonsoft.Json" />
   </ItemGroup>
 </Project>
