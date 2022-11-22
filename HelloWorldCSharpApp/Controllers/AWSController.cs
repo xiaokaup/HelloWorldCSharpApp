@@ -49,6 +49,41 @@ namespace HelloWorldCSharpApp.Controllers
             return response.Reservation.Instances.ToList();
         }
 
+        [HttpGet("describeAllInstances", Name = "describeAllInstances")]
+        public async Task<List<Reservation>> describeAllInstances()
+        {
+            System.Diagnostics.Debug.WriteLine("Start describeAllInstances...");
+
+            DescribeInstancesResponse response = await this.awsEc2Client.DescribeInstancesAsync();
+
+            System.Diagnostics.Debug.WriteLine("Finish describeAllInstances.");
+
+            return response.Reservations.ToList();
+        }
+
+        [HttpGet("describeInstances", Name = "describeInstances")]
+        public async Task<List<Reservation>> describeInstances()
+        {
+            System.Diagnostics.Debug.WriteLine("Start describeInstances...");
+
+            DescribeInstancesRequest describeEC2Request = new DescribeInstancesRequest
+            {
+                Filters = new List<Filter> {
+                    new Filter {
+                        Name = "instance-type",
+                        Values = new List<string> {
+                            "t2.micro"
+                        }
+                    }
+                }
+            };
+            DescribeInstancesResponse response = await this.awsEc2Client.DescribeInstancesAsync(describeEC2Request);
+
+            System.Diagnostics.Debug.WriteLine("Finish describeInstances.");
+
+            return response.Reservations.ToList();
+        }
+
         [HttpGet("stopInstance", Name = "stopInstance")]
         public async Task<List<InstanceStateChange>> stopInstance(string instanceId)
         {
@@ -72,7 +107,7 @@ namespace HelloWorldCSharpApp.Controllers
         [HttpGet("terminateInstance", Name = "terminateInstance")]
         public async Task<List<InstanceStateChange>> terminateInstance(string instanceId)
         {
-            System.Diagnostics.Debug.WriteLine("Start stopInstance...");
+            System.Diagnostics.Debug.WriteLine("Start terminateInstance...");
 
             TerminateInstancesRequest stopEc2Request = new TerminateInstancesRequest
             {
@@ -84,7 +119,7 @@ namespace HelloWorldCSharpApp.Controllers
 
             TerminateInstancesResponse response = await this.awsEc2Client.TerminateInstancesAsync(stopEc2Request);
 
-            System.Diagnostics.Debug.WriteLine("Finish stopInstance.");
+            System.Diagnostics.Debug.WriteLine("Finish terminateInstance.");
 
             return response.TerminatingInstances.ToList();
         }
