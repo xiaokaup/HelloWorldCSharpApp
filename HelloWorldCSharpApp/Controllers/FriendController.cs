@@ -14,14 +14,15 @@ namespace HelloWorldCSharpApp.Controllers
     public class FriendController : ControllerBase
     {
 
-        static HttpClient client = new HttpClient();
+        private HttpClient client = new HttpClient();
 
-        //private readonly ILogger<FriendController> _logger;
-
-        //public FriendController(ILogger<FriendController> logger)
-        //{
-        //    _logger = logger;
-        //}
+        public FriendController()
+        {
+            // Update port # in the following line.
+            client.BaseAddress = new Uri("http://localhost:8080/");
+            client.DefaultRequestHeaders.Accept.Clear();
+            client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+        }
 
         [HttpGet("test1", Name = "test1")]
         public Uri test1()
@@ -31,12 +32,6 @@ namespace HelloWorldCSharpApp.Controllers
         [HttpGet("test2", Name = "test2")]
         public async Task<Object> test2()
         {
-            // Update port # in the following line.
-            client.BaseAddress = new Uri("http://localhost:8080/");
-            client.DefaultRequestHeaders.Accept.Clear();
-            client.DefaultRequestHeaders.Accept.Add(
-                new MediaTypeWithQualityHeaderValue("application/json"));
-
             Object data = null;
             HttpResponseMessage response = await client.GetAsync("/demo");
             if (response.IsSuccessStatusCode)
