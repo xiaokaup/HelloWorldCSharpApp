@@ -38,10 +38,11 @@ namespace HelloWorldCSharpApp.Controllers
                 new MediaTypeWithQualityHeaderValue("application/json"));
 
             Object data = null;
-            HttpResponseMessage response = await client.GetAsync("/index");
+            HttpResponseMessage response = await client.GetAsync("/demo");
             if (response.IsSuccessStatusCode)
             {
-                data = await response.Content.ReadAsAsync<Object>();
+                //data = await response.Content.ReadAsAsync<Object>();
+                data = await response.Content.ReadAsStringAsync();
             } else
             {
                 data = response.StatusCode;
