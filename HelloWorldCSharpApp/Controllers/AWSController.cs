@@ -20,6 +20,7 @@ namespace HelloWorldCSharpApp.Controllers
     {
         private AmazonEC2Client awsEc2Client;
         private AmazonSimpleSystemsManagementClient awsSSMClient;
+        private CustomAmazonSimpleSystemsManagementClient customAwsSSMClient;
 
         public AWSController()
         {
@@ -30,8 +31,8 @@ namespace HelloWorldCSharpApp.Controllers
             AWSCredentials credentials = new BasicAWSCredentials(accessKey, secretKey);
             this.awsEc2Client = new AmazonEC2Client(credentials, region);
             this.awsSSMClient = new AmazonSimpleSystemsManagementClient(credentials, region);
+            this.customAwsSSMClient = new CustomAmazonSimpleSystemsManagementClient(credentials, region);
         }
-
 
         [HttpGet("runInstance", Name = "runInstance")]
         public async Task<List<Instance>> runInstance()
@@ -154,10 +155,44 @@ namespace HelloWorldCSharpApp.Controllers
             return response.Command;
         }
 
-        [HttpGet("getCommandInvocation1", Name = "getCommandInvocation1")]
-        public async Task<GetCommandInvocationResponse> getCommandInvocation1(string commandId, string instanceId)
+        [HttpGet("sendCommand2", Name = "sendCommand2")]
+        public async Task<Command> sendCommand2(string instanceId)
         {
-            System.Diagnostics.Debug.WriteLine("Start getCommandInvocation1...");
+            System.Diagnostics.Debug.WriteLine("Start sendCommand2...");
+
+            Dictionary<string, List<string>> parameters = new Dictionary<string, List<string>>();
+            Dictionary<string, List<string>> parametersSourceInfo = new Dictionary<string, List<string>>();
+            parametersSourceInfo.Add("path", new List<string> { "https://ansys-s3-bucket.s3.eu-west-3.amazonaws.com/first_script.sh" });
+            parametersSourceInfo.Add("commandLine", new List<string> { "first_script.sh" });
+            string test = parametersSourceInfo.ToString();
+            System.Diagnostics.Debug.WriteLine("sendCommand2 test string:");
+            System.Diagnostics.Debug.WriteLine(test);
+
+            parameters.Add("sourceType", new List<string> { "S3" });
+            //parameters.Add("sourceInfo", new List<string> { parametersSourceInfo.ToString() });
+            parameters.Add("sourceInfo", new List<string> { TString.ToDebugString(parametersSourceInfo) });
+            //parameters.Add("commandLine", new List<string> { "first_script.sh" });
+            SendCommandRequest sendCommandRequest = new SendCommandRequest
+            {
+                DocumentName = "AWS-RunRemoteScript",
+                InstanceIds = new List<string>
+                {
+                    instanceId,
+                },
+                Parameters = parameters
+            };
+
+            SendCommandResponse response = await this.awsSSMClient.SendCommandAsync(sendCommandRequest);
+
+            System.Diagnostics.Debug.WriteLine("Finish sendCommand2.");
+
+            return response.Command;
+        }
+
+        [HttpGet("getCommandInvocation", Name = "getCommandInvocation")]
+        public async Task<GetCommandInvocationResponse> getCommandInvocation(string commandId, string instanceId)
+        {
+            System.Diagnostics.Debug.WriteLine("Start getCommandInvocation...");
 
             GetCommandInvocationRequest sendCommandRequest = new GetCommandInvocationRequest
             {
@@ -167,7 +202,7 @@ namespace HelloWorldCSharpApp.Controllers
 
             GetCommandInvocationResponse response = await this.awsSSMClient.GetCommandInvocationAsync(sendCommandRequest);
 
-            System.Diagnostics.Debug.WriteLine("Finish getCommandInvocation1.");
+            System.Diagnostics.Debug.WriteLine("Finish getCommandInvocation.");
 
             return response;
         }
