@@ -160,7 +160,6 @@ namespace HelloWorldCSharpApp.Controllers
         {
             System.Diagnostics.Debug.WriteLine("Start sendCommand2...");
 
-            
             Dictionary<string, string> parametersSourceInfo = new Dictionary<string, string>();
             parametersSourceInfo.Add("path", "https://follow-paris-s3-bucket.s3.eu-west-3.amazonaws.com/first_script.sh");
 
