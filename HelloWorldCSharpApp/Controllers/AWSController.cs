@@ -21,14 +21,15 @@ namespace HelloWorldCSharpApp.Controllers
         {
             string accessKey = "";
             string secretKey = "";
+            Amazon.RegionEndpoint region = Amazon.RegionEndpoint.EUWest3;
 
             AWSCredentials credentials = new BasicAWSCredentials(accessKey, secretKey);
-            this.awsEc2Client = new AmazonEC2Client(credentials, Amazon.RegionEndpoint.EUWest3);
+            this.awsEc2Client = new AmazonEC2Client(credentials, region);
         }
 
 
         [HttpGet("runInstance", Name = "runInstance")]
-        public async Task<HttpStatusCode> runInstance()
+        public async Task<List<Instance>> runInstance()
         {
             System.Diagnostics.Debug.WriteLine("Start runInstance...");
 
@@ -45,11 +46,11 @@ namespace HelloWorldCSharpApp.Controllers
 
             System.Diagnostics.Debug.WriteLine("Finish runInstance.");
 
-            return response.HttpStatusCode;
+            return response.Reservation.Instances.ToList();
         }
 
         [HttpGet("stopInstance", Name = "stopInstance")]
-        public async Task<HttpStatusCode> stopInstance(string instanceId)
+        public async Task<List<InstanceStateChange>> stopInstance(string instanceId)
         {
             System.Diagnostics.Debug.WriteLine("Start stopInstance...");
 
@@ -61,15 +62,15 @@ namespace HelloWorldCSharpApp.Controllers
                 }
             };
 
-            StopInstancesResponse response = await awsEc2Client.StopInstancesAsync(stopEc2Request);
+            StopInstancesResponse response = await this.awsEc2Client.StopInstancesAsync(stopEc2Request);
 
             System.Diagnostics.Debug.WriteLine("Finish stopInstance.");
 
-            return response.HttpStatusCode;
+            return response.StoppingInstances.ToList();
         }
 
         [HttpGet("terminateInstance", Name = "terminateInstance")]
-        public async Task<HttpStatusCode> terminateInstance(string instanceId)
+        public async Task<List<InstanceStateChange>> terminateInstance(string instanceId)
         {
             System.Diagnostics.Debug.WriteLine("Start stopInstance...");
 
@@ -81,11 +82,11 @@ namespace HelloWorldCSharpApp.Controllers
                 }
             };
 
-            TerminateInstancesResponse response = await awsEc2Client.TerminateInstancesAsync(stopEc2Request);
+            TerminateInstancesResponse response = await this.awsEc2Client.TerminateInstancesAsync(stopEc2Request);
 
             System.Diagnostics.Debug.WriteLine("Finish stopInstance.");
 
-            return response.HttpStatusCode;
+            return response.TerminatingInstances.ToList();
         }
     }
 }
