@@ -9,8 +9,8 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace HelloWorldCSharpApp.Controllers
 {
-    [ApiController]
     [Route("api/[controller]")]
+    [ApiController]
     public class FriendController : ControllerBase
     {
 
