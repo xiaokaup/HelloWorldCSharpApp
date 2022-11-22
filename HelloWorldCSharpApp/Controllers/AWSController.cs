@@ -13,16 +13,28 @@ namespace HelloWorldCSharpApp.Controllers
     [ApiController]
     public class AWSController : ControllerBase
     {
-        private AWSCredentials credentials;
         private AmazonEC2Client awsEc2Client;
 
-        public AWSController(AWSCredentials credentials, AmazonEC2Client awsEc2Client)
+        public AWSController()
         {
             string accessKey = "";
             string secretKey = "";
-            
-            this.credentials = new BasicAWSCredentials(accessKey, secretKey);
+
+            AWSCredentials credentials = new BasicAWSCredentials(accessKey, secretKey);
             this.awsEc2Client = new AmazonEC2Client(credentials, Amazon.RegionEndpoint.EUWest3);
+        }
+
+
+        [HttpGet("runInstance", Name = "runInstance")]
+        public void runInstance()
+        {
+            System.Diagnostics.Debug.WriteLine("runInstance...");
+        }
+
+        [HttpGet("stopInstance", Name = "stopInstance")]
+        public void stopInstance()
+        {
+            System.Diagnostics.Debug.WriteLine("stopInstance...");
         }
     }
 }
