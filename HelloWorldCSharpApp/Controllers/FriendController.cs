@@ -19,7 +19,13 @@ namespace HelloWorldCSharpApp.Controllers
         //    _logger = logger;
         //}
 
-        [HttpGet(Name = "GetFriends")]
+        [HttpGet(Name = "test")]
+        public string Get()
+        {
+            return "ok";
+        }
+
+        [HttpGet("getFriends", Name = "GetFriends")]
         public List<Friend> GetFriends()
         {
             List<Friend> firends = new List<Friend>();
@@ -30,5 +36,7 @@ namespace HelloWorldCSharpApp.Controllers
 
             return firends;
         }
+
+        
     }
 }
