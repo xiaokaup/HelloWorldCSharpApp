@@ -19,10 +19,15 @@ namespace HelloWorldCSharpApp.Controllers
         //    _logger = logger;
         //}
 
-        [HttpGet(Name = "test")]
-        public string Get()
+        [HttpGet("test1", Name = "test1")]
+        public Uri test1()
         {
-            return "ok";
+            return new Uri("https://blog.followparis.com/");
+        }
+        [HttpGet("test2", Name = "test2")]
+        public Uri test2()
+        {
+            return new Uri("https://blog.followparis.com/");
         }
 
         [HttpGet("getFriends", Name = "GetFriends")]
