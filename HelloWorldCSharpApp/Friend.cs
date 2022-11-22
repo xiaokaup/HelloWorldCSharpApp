@@ -3,9 +3,9 @@ namespace HelloWorldCSharpApp
 {
 	public class Friend
     {
-		public string firstName;
-		public string lastName;
-		public string location;
+		public string firstName { get; set; }
+		public string lastName { get; set; }
+		public string location { get; set; }
 
 		public Friend()
 		{
