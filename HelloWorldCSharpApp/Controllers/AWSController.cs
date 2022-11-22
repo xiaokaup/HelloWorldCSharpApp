@@ -3,11 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
+using Amazon.Runtime;
 using Amazon.EC2;
 using Amazon.EC2.Model;
-using Amazon.Runtime;
+using Amazon.SimpleSystemsManagement;
+using Amazon.SimpleSystemsManagement.Model;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+
 
 namespace HelloWorldCSharpApp.Controllers
 {
@@ -16,6 +19,7 @@ namespace HelloWorldCSharpApp.Controllers
     public class AWSController : ControllerBase
     {
         private AmazonEC2Client awsEc2Client;
+        private AmazonSimpleSystemsManagementClient awsSSMClient;
 
         public AWSController()
         {
@@ -25,6 +29,7 @@ namespace HelloWorldCSharpApp.Controllers
 
             AWSCredentials credentials = new BasicAWSCredentials(accessKey, secretKey);
             this.awsEc2Client = new AmazonEC2Client(credentials, region);
+            this.awsSSMClient = new AmazonSimpleSystemsManagementClient(credentials, region);
         }
 
 
@@ -123,5 +128,32 @@ namespace HelloWorldCSharpApp.Controllers
 
             return response.TerminatingInstances.ToList();
         }
+
+
+        [HttpGet("sendCommand1", Name = "sendCommand1")]
+        public async Task<Command> sendCommand1(string instanceId)
+        {
+            System.Diagnostics.Debug.WriteLine("Start sendCommand1...");
+
+            Dictionary<string, List<string>> parameters = new Dictionary<string, List<string>>();
+            parameters.Add("commands", new List<string> { "echo helleWorld !" });
+            SendCommandRequest sendCommandRequest = new SendCommandRequest
+            {
+                DocumentName = "AWS-RunShellScript",
+                InstanceIds = new List<string>
+                {
+                    instanceId,
+                },
+                Parameters = parameters
+            };
+
+            SendCommandResponse response = await this.awsSSMClient.SendCommandAsync(sendCommandRequest);
+
+            System.Diagnostics.Debug.WriteLine("Finish sendCommand1.");
+
+            return response.Command;
+        }
+
+
     }
 }
