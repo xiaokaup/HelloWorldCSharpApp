@@ -19,6 +19,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OrleansBasicApp.Grains", "O
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "OrleansBasicApp", "OrleansBasicApp", "{0C51A44B-47FB-4733-AAC5-9F68E4468CAF}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OrleansBasicApp.Silo.Client", "OrleansBasicApp.Silo.Client\OrleansBasicApp.Silo.Client.csproj", "{24270EB3-47A2-4AC0-9D41-CF44D3C9EF6C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -53,6 +55,10 @@ Global
 		{0CBE7031-EA72-49CE-98A0-39782807B774}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0CBE7031-EA72-49CE-98A0-39782807B774}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0CBE7031-EA72-49CE-98A0-39782807B774}.Release|Any CPU.Build.0 = Release|Any CPU
+		{24270EB3-47A2-4AC0-9D41-CF44D3C9EF6C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{24270EB3-47A2-4AC0-9D41-CF44D3C9EF6C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{24270EB3-47A2-4AC0-9D41-CF44D3C9EF6C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{24270EB3-47A2-4AC0-9D41-CF44D3C9EF6C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -65,5 +71,6 @@ Global
 		{D06B5D6E-8474-449E-9084-7C7B521CF5CB} = {0C51A44B-47FB-4733-AAC5-9F68E4468CAF}
 		{0CBE7031-EA72-49CE-98A0-39782807B774} = {0C51A44B-47FB-4733-AAC5-9F68E4468CAF}
 		{88C1EEA5-59F5-4637-94EF-309DE95575CD} = {0C51A44B-47FB-4733-AAC5-9F68E4468CAF}
+		{24270EB3-47A2-4AC0-9D41-CF44D3C9EF6C} = {0C51A44B-47FB-4733-AAC5-9F68E4468CAF}
 	EndGlobalSection
 EndGlobal
