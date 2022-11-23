@@ -6,7 +6,7 @@ try
 {
     var host = await StartSiloAsync();
     Console.WriteLine("\n\n Press Enter to terminate...\n\n");
-    Console.WriteLine();
+    Console.ReadLine();
 
     await host.StopAsync();
 
