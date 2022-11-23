@@ -17,6 +17,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OrleansBasicApp.GrainInterf
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OrleansBasicApp.Grains", "OrleansBasicApp.Grains\OrleansBasicApp.Grains.csproj", "{0CBE7031-EA72-49CE-98A0-39782807B774}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "OrleansBasicApp", "OrleansBasicApp", "{0C51A44B-47FB-4733-AAC5-9F68E4468CAF}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -57,5 +59,11 @@ Global
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {48494C58-D9E6-47AB-A210-13C433AA2D49}
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{DBA28339-0BAD-4E43-99E3-AC6FBDDAC06A} = {0C51A44B-47FB-4733-AAC5-9F68E4468CAF}
+		{D06B5D6E-8474-449E-9084-7C7B521CF5CB} = {0C51A44B-47FB-4733-AAC5-9F68E4468CAF}
+		{0CBE7031-EA72-49CE-98A0-39782807B774} = {0C51A44B-47FB-4733-AAC5-9F68E4468CAF}
+		{88C1EEA5-59F5-4637-94EF-309DE95575CD} = {0C51A44B-47FB-4733-AAC5-9F68E4468CAF}
 	EndGlobalSection
 EndGlobal
