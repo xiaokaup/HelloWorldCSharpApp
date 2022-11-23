@@ -9,6 +9,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HelloWorldApp", "HelloWorld
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HelloOrleansApp", "HelloOrleansApp\HelloOrleansApp.csproj", "{35449115-E6C9-4CE0-9FA5-34A0B349D8FA}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OrleansBasicApp.Silo", "OrleansBasicApp.Silo\OrleansBasicApp.Silo.csproj", "{88C1EEA5-59F5-4637-94EF-309DE95575CD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OrleansBasicApp.Client", "OrleansBasicApp.Client\OrleansBasicApp.Client.csproj", "{DBA28339-0BAD-4E43-99E3-AC6FBDDAC06A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +31,14 @@ Global
 		{35449115-E6C9-4CE0-9FA5-34A0B349D8FA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{35449115-E6C9-4CE0-9FA5-34A0B349D8FA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{35449115-E6C9-4CE0-9FA5-34A0B349D8FA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{88C1EEA5-59F5-4637-94EF-309DE95575CD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{88C1EEA5-59F5-4637-94EF-309DE95575CD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{88C1EEA5-59F5-4637-94EF-309DE95575CD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{88C1EEA5-59F5-4637-94EF-309DE95575CD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DBA28339-0BAD-4E43-99E3-AC6FBDDAC06A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DBA28339-0BAD-4E43-99E3-AC6FBDDAC06A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DBA28339-0BAD-4E43-99E3-AC6FBDDAC06A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DBA28339-0BAD-4E43-99E3-AC6FBDDAC06A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
