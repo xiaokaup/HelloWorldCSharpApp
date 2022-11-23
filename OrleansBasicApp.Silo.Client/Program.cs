@@ -10,7 +10,7 @@ try
     var client = host.Services.GetRequiredService<IClusterClient>();
 
     await DoClientWorkAsync(client);
-    Console.ReadKey();
+    Console.Read();
 
     return 0;
 }
