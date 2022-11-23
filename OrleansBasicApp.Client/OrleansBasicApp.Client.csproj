@@ -12,4 +12,14 @@
       <GlobalPropertiesToRemove></GlobalPropertiesToRemove>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup>
+    <None Remove="Microsoft.Orleans.Client" />
+    <None Remove="Microsoft.Extensions.Logging.Console" />
+    <None Remove="Microsoft.Extensions.Hosting" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Orleans.Client" Version="7.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Console" Version="7.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Hosting" Version="7.0.0" />
+  </ItemGroup>
 </Project>
