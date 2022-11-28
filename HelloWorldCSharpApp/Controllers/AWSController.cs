@@ -39,7 +39,8 @@ namespace HelloWorldCSharpApp.Controllers
         {
             System.Diagnostics.Debug.WriteLine("Start createInstance...");
 
-            RunInstancesRequest createEc2Request = new RunInstancesRequest {
+            RunInstancesRequest createEc2Request = new RunInstancesRequest
+            {
                 ImageId = "ami-02b01316e6e3496d9",
                 MinCount = 1,
                 MaxCount = 1,
@@ -53,6 +54,26 @@ namespace HelloWorldCSharpApp.Controllers
             System.Diagnostics.Debug.WriteLine("Finish createInstance.");
 
             return response.Reservation.Instances.ToList();
+        }
+
+        [HttpGet("startInstance", Name = "startInstance")]
+        public async Task<List<InstanceStateChange>> startInstance(string instanceId)
+        {
+            System.Diagnostics.Debug.WriteLine("Start createInstance...");
+
+            StartInstancesRequest startEc2Request = new StartInstancesRequest
+            {
+                InstanceIds = new List<string>
+                {
+                    instanceId,
+                }
+            };
+
+            StartInstancesResponse response = await this.awsEc2Client.StartInstancesAsync(startEc2Request);
+
+            System.Diagnostics.Debug.WriteLine("Finish createInstance.");
+
+            return response.StartingInstances.ToList();
         }
 
         [HttpGet("describeAllInstances", Name = "describeAllInstances")]
