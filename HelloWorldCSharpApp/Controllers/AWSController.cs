@@ -34,12 +34,12 @@ namespace HelloWorldCSharpApp.Controllers
             this.customAwsSSMClient = new CustomAmazonSimpleSystemsManagementClient(credentials, region);
         }
 
-        [HttpGet("runInstance", Name = "runInstance")]
-        public async Task<List<Instance>> runInstance()
+        [HttpGet("createInstance", Name = "createInstance")]
+        public async Task<List<Instance>> createInstance()
         {
-            System.Diagnostics.Debug.WriteLine("Start runInstance...");
+            System.Diagnostics.Debug.WriteLine("Start createInstance...");
 
-            RunInstancesRequest startEc2Request = new RunInstancesRequest {
+            RunInstancesRequest createEc2Request = new RunInstancesRequest {
                 ImageId = "ami-02b01316e6e3496d9",
                 MinCount = 1,
                 MaxCount = 1,
@@ -48,9 +48,9 @@ namespace HelloWorldCSharpApp.Controllers
                 SubnetId = "subnet-0c8782d18d92c563d"
             };
 
-            RunInstancesResponse response = await this.awsEc2Client.RunInstancesAsync(startEc2Request);
+            RunInstancesResponse response = await this.awsEc2Client.RunInstancesAsync(createEc2Request);
 
-            System.Diagnostics.Debug.WriteLine("Finish runInstance.");
+            System.Diagnostics.Debug.WriteLine("Finish createInstance.");
 
             return response.Reservation.Instances.ToList();
         }
