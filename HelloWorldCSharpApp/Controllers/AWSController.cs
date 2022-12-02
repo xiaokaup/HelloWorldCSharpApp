@@ -89,20 +89,21 @@ namespace HelloWorldCSharpApp.Controllers
         }
 
         [HttpGet("describeInstances", Name = "describeInstances")]
-        public async Task<List<Reservation>> describeInstances()
+        public async Task<List<Reservation>> describeInstances(string instanceId)
         {
             System.Diagnostics.Debug.WriteLine("Start describeInstances...");
 
             DescribeInstancesRequest describeEC2Request = new DescribeInstancesRequest
             {
-                Filters = new List<Filter> {
-                    new Filter {
-                        Name = "instance-type",
-                        Values = new List<string> {
-                            "t2.micro"
-                        }
-                    }
-                }
+                // Filters = new List<Filter> {
+                //     new Filter {
+                //         Name = "instance-type",
+                //         Values = new List<string> {
+                //             "t2.micro"
+                //         }
+                //     }
+                // },
+                InstanceIds = new List<string> { instanceId }
             };
             DescribeInstancesResponse response = await this.awsEc2Client.DescribeInstancesAsync(describeEC2Request);
 
@@ -249,6 +250,23 @@ namespace HelloWorldCSharpApp.Controllers
 
             return response.IamInstanceProfileAssociation;
         }
+        [HttpGet("DescribeAssociation", Name = "DescribeAssociation")]
+        public async Task<List<IamInstanceProfileAssociation>> DescribeAssociation(string associationId)
+        {
+            System.Diagnostics.Debug.WriteLine("Start DescribeAssociation...");
+
+            DescribeIamInstanceProfileAssociationsRequest DescribeAssociationRequest = new DescribeIamInstanceProfileAssociationsRequest
+            {
+                AssociationIds = new List<string> { associationId }
+            };
+
+            DescribeIamInstanceProfileAssociationsResponse response = await this.awsEc2Client.DescribeIamInstanceProfileAssociationsAsync(DescribeAssociationRequest);
+
+            System.Diagnostics.Debug.WriteLine("Finish DescribeAssociation.");
+
+            return response.IamInstanceProfileAssociations.ToList();
+        }
+
         [HttpGet("removeRoleFromEC2", Name = "removeRoleFromEC2")]
         public async Task<IamInstanceProfileAssociation> removeRoleFromEC2(string associationId)
         {
@@ -265,6 +283,5 @@ namespace HelloWorldCSharpApp.Controllers
 
             return response.IamInstanceProfileAssociation;
         }
-
     }
 }
