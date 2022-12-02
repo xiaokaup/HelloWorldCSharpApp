@@ -231,9 +231,11 @@ namespace HelloWorldCSharpApp.Controllers
         {
             System.Diagnostics.Debug.WriteLine("Start addRoleToEC2...");
 
-            IamInstanceProfileSpecification iamInstanceProfile = new IamInstanceProfileSpecification();
-            iamInstanceProfile.Arn = iamInstanceProfileArn;
-            iamInstanceProfile.Name = iamInstanceProfileName;
+            IamInstanceProfileSpecification iamInstanceProfile = new IamInstanceProfileSpecification()
+            {
+                Arn = iamInstanceProfileArn,
+                Name = iamInstanceProfileName
+            };
 
             AssociateIamInstanceProfileRequest addRoleToEc2Request = new AssociateIamInstanceProfileRequest
             {
@@ -244,6 +246,22 @@ namespace HelloWorldCSharpApp.Controllers
             AssociateIamInstanceProfileResponse response = await this.awsEc2Client.AssociateIamInstanceProfileAsync(addRoleToEc2Request);
 
             System.Diagnostics.Debug.WriteLine("Finish addRoleToEC2.");
+
+            return response.IamInstanceProfileAssociation;
+        }
+        [HttpGet("removeRoleFromEC2", Name = "removeRoleFromEC2")]
+        public async Task<IamInstanceProfileAssociation> removeRoleFromEC2(string associationId)
+        {
+            System.Diagnostics.Debug.WriteLine("Start removeRoleFromEC2...");
+
+            DisassociateIamInstanceProfileRequest removeRoleFromEc2Request = new DisassociateIamInstanceProfileRequest
+            {
+                AssociationId = associationId
+            };
+
+            DisassociateIamInstanceProfileResponse response = await this.awsEc2Client.DisassociateIamInstanceProfileAsync(removeRoleFromEc2Request);
+
+            System.Diagnostics.Debug.WriteLine("Finish removeRoleFromEC2.");
 
             return response.IamInstanceProfileAssociation;
         }
