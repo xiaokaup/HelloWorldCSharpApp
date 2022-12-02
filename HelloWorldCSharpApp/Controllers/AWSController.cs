@@ -226,6 +226,27 @@ namespace HelloWorldCSharpApp.Controllers
             return response;
         }
 
+        [HttpGet("addRoleToEC2", Name = "addRoleToEC2")]
+        public async Task<IamInstanceProfileAssociation> addRoleToEC2(string iamInstanceProfileArn, string iamInstanceProfileName, string instanceId)
+        {
+            System.Diagnostics.Debug.WriteLine("Start addRoleToEC2...");
+
+            IamInstanceProfileSpecification iamInstanceProfile = new IamInstanceProfileSpecification();
+            iamInstanceProfile.Arn = iamInstanceProfileArn;
+            iamInstanceProfile.Name = iamInstanceProfileName;
+
+            AssociateIamInstanceProfileRequest addRoleToEc2Request = new AssociateIamInstanceProfileRequest
+            {
+                IamInstanceProfile = iamInstanceProfile,
+                InstanceId = instanceId
+            };
+
+            AssociateIamInstanceProfileResponse response = await this.awsEc2Client.AssociateIamInstanceProfileAsync(addRoleToEc2Request);
+
+            System.Diagnostics.Debug.WriteLine("Finish addRoleToEC2.");
+
+            return response.IamInstanceProfileAssociation;
+        }
 
     }
 }
