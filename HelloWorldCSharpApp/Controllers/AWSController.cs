@@ -204,7 +204,9 @@ namespace HelloWorldCSharpApp.Controllers
                 {
                     instanceId,
                 },
-                Parameters = parameters
+                Parameters = parameters,
+                OutputS3BucketName = "ansys-gateway-development",
+                OutputS3KeyPrefix = "runCommandsOutput"
             };
 
             SendCommandResponse response = await this.awsSSMClient.SendCommandAsync(sendCommandRequest);
