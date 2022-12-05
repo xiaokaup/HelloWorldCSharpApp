@@ -39,6 +39,11 @@ namespace HelloWorldCSharpApp.Controllers
         {
             System.Diagnostics.Debug.WriteLine("Start createInstance...");
 
+            IamInstanceProfileSpecification iamInstanceProfile = new IamInstanceProfileSpecification()
+            {
+                Arn = "arn:aws:iam::567618406205:instance-profile/ecsInstanceRole"
+            };
+
             RunInstancesRequest createEc2Request = new RunInstancesRequest
             {
                 ImageId = "ami-02b01316e6e3496d9",
@@ -46,7 +51,8 @@ namespace HelloWorldCSharpApp.Controllers
                 MaxCount = 1,
                 InstanceType = "t3.nano",
                 SecurityGroupIds = new List<string>() { "sg-003eb38f17617c1ce" },
-                SubnetId = "subnet-0c8782d18d92c563d"
+                SubnetId = "subnet-0c8782d18d92c563d",
+                IamInstanceProfile = iamInstanceProfile
             };
 
             RunInstancesResponse response = await this.awsEc2Client.RunInstancesAsync(createEc2Request);
