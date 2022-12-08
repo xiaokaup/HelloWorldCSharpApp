@@ -158,6 +158,27 @@ namespace HelloWorldCSharpApp.Controllers
             return response.TerminatingInstances.ToList();
         }
 
+        [HttpGet("getScriptFromS3", Name = "getScriptFromS3")]
+        public async Task<string> getScriptFromS3(string s3ScriptUrl)
+        {
+            System.Diagnostics.Debug.WriteLine("Start getScriptFromS3...");
+
+            s3ScriptUrl = "https://follow-paris-s3-bucket.s3.eu-west-3.amazonaws.com/first_script.sh";
+
+            var result = await new HttpClient().GetStringAsync(s3ScriptUrl);
+
+            //DisassociateIamInstanceProfileRequest removeRoleFromEc2Request = new DisassociateIamInstanceProfileRequest
+            //{
+            //    AssociationId = associationId
+            //};
+
+            //DisassociateIamInstanceProfileResponse response = await this.awsEc2Client.DisassociateIamInstanceProfileAsync(removeRoleFromEc2Request);
+
+            System.Diagnostics.Debug.WriteLine("Finish getScriptFromS3.");
+
+            //return response.IamInstanceProfileAssociation;
+            return result;
+        }
 
         [HttpGet("sendCommand1", Name = "sendCommand1")]
         public async Task<Command> sendCommand1(string instanceId)
