@@ -20,7 +20,8 @@ namespace HelloWorldCSharpApp.Controllers
     {
         private AmazonEC2Client awsEc2Client;
         private AmazonSimpleSystemsManagementClient awsSSMClient;
-        private CustomAmazonSimpleSystemsManagementClient customAwsSSMClient;
+        //private AmazonS3Client awsS3Client;
+
 
         public AWSController()
         {
@@ -31,7 +32,8 @@ namespace HelloWorldCSharpApp.Controllers
             AWSCredentials credentials = new BasicAWSCredentials(accessKey, secretKey);
             this.awsEc2Client = new AmazonEC2Client(credentials, region);
             this.awsSSMClient = new AmazonSimpleSystemsManagementClient(credentials, region);
-            this.customAwsSSMClient = new CustomAmazonSimpleSystemsManagementClient(credentials, region);
+            //this.awsS3Client = new AmazonS3Client(credentials, region);
+
         }
 
         [HttpGet("createInstance", Name = "createInstance")]
@@ -166,6 +168,8 @@ namespace HelloWorldCSharpApp.Controllers
             s3ScriptUrl = "https://follow-paris-s3-bucket.s3.eu-west-3.amazonaws.com/first_script.sh";
 
             var result = await new HttpClient().GetStringAsync(s3ScriptUrl);
+
+            //new AmazonS3Client()
 
             //DisassociateIamInstanceProfileRequest removeRoleFromEc2Request = new DisassociateIamInstanceProfileRequest
             //{
