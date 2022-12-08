@@ -24,8 +24,8 @@ namespace HelloWorldCSharpApp.Controllers
 
         public AWSController()
         {
-            string accessKey = "";
-            string secretKey = "";
+            string accessKey = Environment.GetEnvironmentVariable("AWSAccessKey");
+            string secretKey = Environment.GetEnvironmentVariable("AWSSecretKey");
             Amazon.RegionEndpoint region = Amazon.RegionEndpoint.EUWest3;
 
             AWSCredentials credentials = new BasicAWSCredentials(accessKey, secretKey);
