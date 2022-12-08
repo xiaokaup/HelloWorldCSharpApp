@@ -13,11 +13,12 @@
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="7.0.0" />
     <PackageReference Include="Microsoft.AspNet.WebApi.Client" Version="5.2.9" />
-    <PackageReference Include="AWSSDK.Core" Version="3.7.100.21" />
-    <PackageReference Include="AWSSDK.SimpleSystemsManagement" Version="3.7.102.2" />
-    <PackageReference Include="AWSSDK.EC2" Version="3.7.109" />
-    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+    <PackageReference Include="AWSSDK.Core" Version="3.7.102" />
+    <PackageReference Include="AWSSDK.SimpleSystemsManagement" Version="3.7.102.13" />
+    <PackageReference Include="AWSSDK.EC2" Version="3.7.112.3" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.2" />
     <PackageReference Include="DotNetEnv" Version="2.3.0" />
+    <PackageReference Include="AWSSDK.S3" Version="3.7.101.32" />
   </ItemGroup>
 
   <ItemGroup>
@@ -28,5 +29,6 @@
     <None Remove="AWSSDK.EC2" />
     <None Remove="Newtonsoft.Json" />
     <None Remove="DotNetEnv" />
+    <None Remove="AWSSDK.S3" />
   </ItemGroup>
 </Project>
