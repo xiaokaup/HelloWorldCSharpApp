@@ -179,16 +179,8 @@ namespace HelloWorldCSharpApp.Controllers
 
             string contents = await reader.ReadToEndAsync();
 
-            //DisassociateIamInstanceProfileRequest removeRoleFromEc2Request = new DisassociateIamInstanceProfileRequest
-            //{
-            //    AssociationId = associationId
-            //};
-
-            //DisassociateIamInstanceProfileResponse response = await this.awsEc2Client.DisassociateIamInstanceProfileAsync(removeRoleFromEc2Request);
-
             System.Diagnostics.Debug.WriteLine("Finish getScriptFromS3.");
 
-            //return response.IamInstanceProfileAssociation;
             return contents;
         }
 
@@ -197,8 +189,10 @@ namespace HelloWorldCSharpApp.Controllers
         {
             System.Diagnostics.Debug.WriteLine("Start sendCommand1...");
 
+            var commandContents = this.getScriptFromS3();
+
             Dictionary<string, List<string>> parameters = new Dictionary<string, List<string>>();
-            parameters.Add("commands", new List<string> { "echo helleWorld !" });
+            parameters.Add("commands", new List<string> { commandContents.Result.ToString() });
             SendCommandRequest sendCommandRequest = new SendCommandRequest
             {
                 DocumentName = "AWS-RunShellScript",
