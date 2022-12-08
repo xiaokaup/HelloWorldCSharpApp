@@ -170,7 +170,7 @@ namespace HelloWorldCSharpApp.Controllers
             GetObjectRequest getObjectRequest = new GetObjectRequest()
             {
                 BucketName = "ansys-gateway-development-private",
-                Key = "first_script.sh"
+                Key = "second_script.sh"
             };
 
             GetObjectResponse getObjectResponse = await this.awsS3Client.GetObjectAsync(getObjectRequest);
