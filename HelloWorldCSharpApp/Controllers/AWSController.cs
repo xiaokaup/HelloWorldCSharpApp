@@ -8,7 +8,8 @@ using Amazon.EC2;
 using Amazon.EC2.Model;
 using Amazon.SimpleSystemsManagement;
 using Amazon.SimpleSystemsManagement.Model;
-//using Amazon.S3;
+using Amazon.S3;
+using Amazon.S3.Model;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
@@ -21,7 +22,7 @@ namespace HelloWorldCSharpApp.Controllers
     {
         private AmazonEC2Client awsEc2Client;
         private AmazonSimpleSystemsManagementClient awsSSMClient;
-        //private AmazonS3Client awsS3Client;
+        private AmazonS3Client awsS3Client;
 
 
         public AWSController()
@@ -33,7 +34,7 @@ namespace HelloWorldCSharpApp.Controllers
             AWSCredentials credentials = new BasicAWSCredentials(accessKey, secretKey);
             this.awsEc2Client = new AmazonEC2Client(credentials, region);
             this.awsSSMClient = new AmazonSimpleSystemsManagementClient(credentials, region);
-            //this.awsS3Client = new AmazonS3Client(credentials, region);
+            this.awsS3Client = new AmazonS3Client(credentials, region);
 
         }
 
@@ -162,15 +163,21 @@ namespace HelloWorldCSharpApp.Controllers
         }
 
         [HttpGet("getScriptFromS3", Name = "getScriptFromS3")]
-        public async Task<string> getScriptFromS3(string s3ScriptUrl)
+        public async Task<string> getScriptFromS3()
         {
             System.Diagnostics.Debug.WriteLine("Start getScriptFromS3...");
 
-            s3ScriptUrl = "https://follow-paris-s3-bucket.s3.eu-west-3.amazonaws.com/first_script.sh";
+            GetObjectRequest getObjectRequest = new GetObjectRequest()
+            {
+                BucketName = "ansys-gateway-development-private",
+                Key = "first_script.sh"
+            };
 
-            var result = await new HttpClient().GetStringAsync(s3ScriptUrl);
+            GetObjectResponse getObjectResponse = await this.awsS3Client.GetObjectAsync(getObjectRequest);
 
-            //new AmazonS3Client()
+            StreamReader reader = new StreamReader(getObjectResponse.ResponseStream);
+
+            string contents = await reader.ReadToEndAsync();
 
             //DisassociateIamInstanceProfileRequest removeRoleFromEc2Request = new DisassociateIamInstanceProfileRequest
             //{
@@ -182,7 +189,7 @@ namespace HelloWorldCSharpApp.Controllers
             System.Diagnostics.Debug.WriteLine("Finish getScriptFromS3.");
 
             //return response.IamInstanceProfileAssociation;
-            return result;
+            return contents;
         }
 
         [HttpGet("sendCommand1", Name = "sendCommand1")]
