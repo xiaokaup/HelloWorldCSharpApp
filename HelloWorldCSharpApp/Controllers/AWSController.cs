@@ -163,14 +163,14 @@ namespace HelloWorldCSharpApp.Controllers
         }
 
         [HttpGet("getScriptFromS3", Name = "getScriptFromS3")]
-        public async Task<string> getScriptFromS3()
+        public async Task<string> getScriptFromS3(string bucketName = "ansys-gateway-development-private", string pathFile = "second_script.sh")
         {
             System.Diagnostics.Debug.WriteLine("Start getScriptFromS3...");
 
             GetObjectRequest getObjectRequest = new GetObjectRequest()
             {
-                BucketName = "ansys-gateway-development-private",
-                Key = "second_script.sh"
+                BucketName = bucketName,
+                Key = pathFile
             };
 
             GetObjectResponse getObjectResponse = await this.awsS3Client.GetObjectAsync(getObjectRequest);
@@ -182,6 +182,18 @@ namespace HelloWorldCSharpApp.Controllers
             System.Diagnostics.Debug.WriteLine("Finish getScriptFromS3.");
 
             return contents;
+        }
+
+        [HttpGet("getScriptFromUrl", Name = "getScriptFromUrl")]
+        public async Task<string> getScriptFromUrl(string scriptUrl = "https://ansys-gateway-development.s3.eu-west-3.amazonaws.com/second_script.sh")
+        {
+            System.Diagnostics.Debug.WriteLine("Start getScriptFromUrl...");
+
+            var result = await new HttpClient().GetStringAsync(scriptUrl);
+
+            System.Diagnostics.Debug.WriteLine("Finish getScriptFromUrl.");
+
+            return result;
         }
 
         [HttpGet("sendCommand1", Name = "sendCommand1")]
