@@ -8,11 +8,14 @@ using Amazon.EC2;
 using Amazon.EC2.Model;
 using Amazon.SimpleSystemsManagement;
 using Amazon.SimpleSystemsManagement.Model;
+using Amazon.SecurityToken;
+using Amazon.SecurityToken.Model;
 using Amazon.S3;
 using Amazon.S3.Model;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
+
 
 namespace HelloWorldCSharpApp.Controllers
 {
@@ -24,6 +27,8 @@ namespace HelloWorldCSharpApp.Controllers
         private AmazonSimpleSystemsManagementClient awsSSMClient;
         private AmazonS3Client awsS3Client;
 
+        private AmazonSecurityTokenServiceClient awsSecurityTokenClient;
+
 
         public AWSController()
         {
@@ -31,11 +36,17 @@ namespace HelloWorldCSharpApp.Controllers
             string secretKey = Environment.GetEnvironmentVariable("AWSSecretKey");
             Amazon.RegionEndpoint region = Amazon.RegionEndpoint.EUWest3;
 
+            string accessKey_ansysGatewayDevelopment = Environment.GetEnvironmentVariable("AWSAccessKeyAnsysGatewayDevelopment");
+            string secretKey_ansysGatewayDevelopment = Environment.GetEnvironmentVariable("AWSSecretKeyAnsysGatewayDevelopment");
+
             AWSCredentials credentials = new BasicAWSCredentials(accessKey, secretKey);
+            AWSCredentials credentials_ansysGatewayDevelopment = new BasicAWSCredentials(accessKey_ansysGatewayDevelopment, secretKey_ansysGatewayDevelopment);
+
             this.awsEc2Client = new AmazonEC2Client(credentials, region);
             this.awsSSMClient = new AmazonSimpleSystemsManagementClient(credentials, region);
             this.awsS3Client = new AmazonS3Client(credentials, region);
 
+            this.awsSecurityTokenClient = new AmazonSecurityTokenServiceClient(credentials_ansysGatewayDevelopment, region);
         }
 
         [HttpGet("createInstance", Name = "createInstance")]
@@ -331,6 +342,27 @@ namespace HelloWorldCSharpApp.Controllers
             System.Diagnostics.Debug.WriteLine("Finish removeRoleFromEC2.");
 
             return response.IamInstanceProfileAssociation;
+        }
+
+        
+        [HttpGet("assumeRole", Name = "assumeRole")]
+        public async Task<Credentials> assumeRole(string assumeRoleArn, string externalId)
+        {
+            System.Diagnostics.Debug.WriteLine("Start assumeRole...");
+
+             var assumeRoleReq = new AssumeRoleRequest()
+            {
+                DurationSeconds = 1600,
+                RoleSessionName = "AWSCLI-Session",
+                RoleArn = assumeRoleArn,
+                ExternalId=externalId
+             };
+
+            AssumeRoleResponse assumeRoleResponse = await this.awsSecurityTokenClient.AssumeRoleAsync(assumeRoleReq);
+
+            System.Diagnostics.Debug.WriteLine("Finish assumeRole.");
+
+            return assumeRoleResponse.Credentials;
         }
     }
 }
